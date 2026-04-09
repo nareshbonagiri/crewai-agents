@@ -1,266 +1,189 @@
-# CrewAI Content Creation System
+# CrewAI Agents - Multi-Agent Content Creation System
 
-A simple multi-agent system for content creation with **Planner**, **Writer**, and **Editor** agents.
+A simple, production-ready multi-agent system for content creation with **Planner**, **Writer**, and **Editor** agents.
 
-## 🎯 What It Does
-
-1. **Planner Agent** 📋 - Creates a detailed outline and plan for your topic
-2. **Writer Agent** ✍️ - Writes comprehensive content following the plan
-3. **Editor Agent** 🔍 - Reviews the content and provides feedback based on brand guidelines
-
-## ⚙️ Setup
-
-### 1. Install Dependencies
+## 🎯 Quick Start
 
 ```bash
+# 1. Install dependencies
 pip install -r requirements.txt
-```
 
-### 2. Configure Your Model
-
-Edit `.env` file to choose your model:
-
-```env
-# For Ollama (local, recommended for quick start)
-MODEL_TYPE=ollama
-MODEL_NAME=tinyllama:latest
-
-# For Claude API
-# MODEL_TYPE=claude
-# MODEL_NAME=claude-haiku-4-5-20251001
-# (requires ANTHROPIC_API_KEY in .env)
-
-# For Gemini (Google)
-# MODEL_TYPE=gemini
-# MODEL_NAME=gemini-1.5-flash
-# (requires GOOGLE_API_KEY in .env and langchain-google-genai installed)
-```
-
-### 3. Start Ollama (if using local models)
-
-```bash
+# 2. Start Ollama (if using local models)
 ollama serve
-```
 
-In another terminal, pull the model:
+# 3. In another terminal, pull a model
+ollama pull llama3.2
 
-```bash
-ollama pull tinyllama  # ~2.2GB - smallest model
-ollama pull neural-chat  # ~4.7GB - good for chat
-ollama pull phi  # ~2.6GB - efficient
-```
-
-List available models:
-
-```bash
-ollama list
-```
-
-## 🚀 Usage
-
-### Basic Usage
-
-```bash
+# 4. Run the system
 python main.py "your topic here"
 ```
 
-### Examples
+## 🤖 Agents
+
+- **📋 Planner** - Creates detailed outlines and structure
+- **✍️ Writer** - Writes engaging, comprehensive content
+- **🔍 Editor** - Reviews for quality and brand alignment
+
+## 🛠️ Configuration
+
+Edit `.env` to choose your model:
 
 ```bash
-# Machine learning topic
-python main.py "machine learning basics"
-
-# Coding best practices
-python main.py "how to write clean code"
-
-# Any topic you want
-python main.py "benefits of remote work"
-```
-
-### Interactive Mode
-
-```bash
-python main.py
-# Then enter your topic when prompted
-```
-
-## 📊 Verbose Levels
-
-Control output detail:
-
-```bash
-# Minimal output
-export VERBOSE_LEVEL=0
-python main.py "topic"
-
-# Normal output (default)
-export VERBOSE_LEVEL=1
-python main.py "topic"
-
-# Verbose output
-export VERBOSE_LEVEL=2
-python main.py "topic"
-```
-
-## 🔄 Switching Models
-
-### Quick Switch
-
-```bash
-# Use a different Ollama model
-export MODEL_NAME=mistral:latest
-python main.py "topic"
-
-# Use Claude (requires API key)
-export MODEL_TYPE=claude
-export MODEL_NAME=claude-haiku-4-5-20251001
-python main.py "topic"
-```
-
-### Edit .env File
-
-Open `.env` and change:
-
-```env
+# Local (free, no API keys)
 MODEL_TYPE=ollama
-MODEL_NAME=tinyllama:latest
-```
+MODEL_NAME=llama3.2:latest
 
-## 📦 Available Models
-
-### Ollama (Local - Recommended for Start)
-
-| Model | Size | Speed | Quality | Command |
-|-------|------|-------|---------|---------|
-| tinyllama | 2.2GB | ⚡⚡⚡ | ⭐ | `ollama pull tinyllama` |
-| neural-chat | 4.7GB | ⚡⚡ | ⭐⭐ | `ollama pull neural-chat` |
-| phi | 2.6GB | ⚡⚡⚡ | ⭐ | `ollama pull phi` |
-| mistral | 4.1GB | ⚡⚡ | ⭐⭐⭐ | `ollama pull mistral` |
-| gemma2 | 5.5GB | ⚡⚡ | ⭐⭐⭐ | `ollama pull gemma2` |
-
-### Claude (API - Higher Quality)
-
-```env
-MODEL_TYPE=claude
-```
-
-Models:
-- `claude-haiku-4-5-20251001` - Fast, cheap
-- `claude-sonnet-4-6` - Balanced
-- `claude-opus-4-6` - Most capable
-
-Requires: `ANTHROPIC_API_KEY` in `.env`
-
-### Gemini (Google - Coming Later)
-
-```env
-MODEL_TYPE=gemini
-```
-
-Models:
-- `gemini-1.5-flash` - Fast
-- `gemini-1.5-pro` - More capable
-- `gemini-2.0-flash` - Latest
-
-Requires: `GOOGLE_API_KEY` in `.env` and `pip install langchain-google-genai`
-
-## 🛠️ Customization
-
-### Change Agent Personalities
-
-Edit `agents.py` to modify:
-
-- Agent backstories
-- Task descriptions
-- Brand guidelines in the Editor task
-
-### Add More Agents
-
-Extend the system with more agents (e.g., Researcher, Reviewer) by:
-
-1. Creating new agent in `agents.py`
-2. Creating new task in `agents.py`
-3. Adding to crew in `create_content_crew()`
-
-## 📋 Project Structure
-
-```
-crewai-agents/
-├── .env                 # Configuration (model, API keys)
-├── config.py           # Model configuration
-├── llm_factory.py      # LLM creation logic
-├── agents.py           # Planner, Writer, Editor agents
-├── main.py             # Entry point
-├── requirements.txt    # Python dependencies
-└── README.md          # This file
-```
-
-## 🐛 Troubleshooting
-
-### "Connection refused" Error
-
-Make sure Ollama is running:
-
-```bash
-ollama serve
-```
-
-In another terminal, pull the model:
-
-```bash
-ollama pull tinyllama
-```
-
-### "Model not found" Error
-
-List available models:
-
-```bash
-ollama list
-```
-
-Download the model:
-
-```bash
-ollama pull <model-name>
-```
-
-### API Key Issues
-
-For Claude or Gemini, ensure API keys are in `.env`:
-
-```env
-ANTHROPIC_API_KEY=sk-ant-...
-GOOGLE_API_KEY=...
-```
-
-### Out of Memory
-
-Use a smaller model:
-
-```env
-MODEL_NAME=tinyllama:latest  # Smallest
-```
-
-Or switch to Claude (uses cloud resources):
-
-```env
+# Claude API (requires ANTHROPIC_API_KEY)
 MODEL_TYPE=claude
 MODEL_NAME=claude-haiku-4-5-20251001
 ```
 
-## 📚 Learn More
+Copy `.env.example` to `.env` and add your configuration:
+```bash
+cp .env.example .env
+```
 
-- [CrewAI Documentation](https://docs.crewai.com/)
-- [Ollama Models](https://ollama.ai/library)
-- [LangChain Documentation](https://python.langchain.com/)
+## 📁 Project Structure
 
-## 📝 Next Steps
+```
+.
+├── main.py                 # Entry point - run this!
+├── agents_simple.py        # Planner, Writer, Editor agents
+├── config.py              # Configuration system
+├── llm_factory.py         # LLM factory
+├── requirements.txt       # Dependencies
+├── .env.example           # Configuration template
+│
+├── docs/                  # Documentation
+│   ├── README.md         # This file
+│   ├── SETUP.md          # Detailed setup guide
+│   ├── QUICKSTART.md     # 5-minute quickstart
+│   ├── START_HERE.md     # Getting started guide
+│   ├── SUMMARY.md        # System overview
+│   └── INTEGRATION.md    # Integration examples
+│
+├── examples/             # Example usage
+│   └── example_usage.py  # Usage patterns
+│
+├── alt-implementations/  # Alternative implementations
+│   ├── agents.py        # Original CrewAI version (needs Python 3.10+)
+│   └── agents_langchain.py  # LangChain version
+│
+└── utils/               # Utility code
+    └── __init__.py
+```
 
-1. ✅ Set up `.env` with your model choice
-2. ✅ Install Ollama and a model (or add API keys)
-3. ✅ Run: `python main.py "your topic"`
-4. ✅ Experiment with different topics and models
-5. ✅ Customize agents and brand guidelines
+## 📚 Documentation
 
-Happy creating! 🚀
+Start with one of these:
+
+- **[QUICKSTART.md](docs/QUICKSTART.md)** - Get running in 5 minutes ⚡
+- **[START_HERE.md](docs/START_HERE.md)** - Overview and next steps
+- **[SETUP.md](docs/SETUP.md)** - Detailed setup instructions
+- **[INTEGRATION.md](docs/INTEGRATION.md)** - Integration examples
+
+## 🚀 Usage Examples
+
+```bash
+# Basic
+python main.py "machine learning basics"
+
+# Interactive mode
+python main.py
+
+# With verbose output
+export VERBOSE_LEVEL=2
+python main.py "your topic"
+
+# Switch models
+export MODEL_TYPE=claude
+python main.py "your topic"
+```
+
+## 📦 Available Models
+
+### Ollama (Local, Free)
+- `tinyllama:latest` - Smallest, fastest
+- `neural-chat:latest` - Good for chat
+- `mistral:latest` - Good balance
+- `llama3.2:latest` - Flexible
+
+### Claude (API)
+- `claude-haiku-4-5-20251001` - Fast, cheap
+- `claude-sonnet-4-6` - Balanced
+- `claude-opus-4-6` - Most capable
+
+### Gemini (Coming Soon)
+- `gemini-1.5-flash` - Fast
+- `gemini-1.5-pro` - More capable
+
+## ⚙️ Requirements
+
+- Python 3.9+
+- Ollama (for local models) or API keys for Claude/Gemini
+- ~2GB disk space for a small Ollama model
+
+## 🐛 Troubleshooting
+
+**"Connection refused" error:**
+```bash
+# Make sure Ollama is running
+ollama serve
+```
+
+**"Model not found":**
+```bash
+# Pull the model
+ollama pull llama3.2
+```
+
+**Out of memory:**
+```bash
+# Use a smaller model
+export MODEL_NAME=tinyllama:latest
+```
+
+## 🔐 Security
+
+- `.env` is never committed (see `.gitignore`)
+- Copy `.env.example` to `.env` and add your secrets
+- API keys stay local
+
+## 🤝 Integration
+
+Use in your Python code:
+
+```python
+from agents_simple import create_content_crew
+
+crew = create_content_crew()
+result = crew.execute("your topic")
+
+print(result["plan"])      # The outline
+print(result["content"])   # The written content
+print(result["feedback"])  # Editorial feedback
+```
+
+See [INTEGRATION.md](docs/INTEGRATION.md) for 10+ examples.
+
+## 📊 Status
+
+✅ **Production Ready**
+- Tested with Ollama (llama3.2:latest)
+- Python 3.9+ compatible
+- Simple, maintainable code
+- Comprehensive documentation
+
+## 📝 License
+
+MIT
+
+## 🙋 Support
+
+- Check [docs/](docs/) for comprehensive guides
+- Run `python main.py -h` for help
+- See [docs/INTEGRATION.md](docs/INTEGRATION.md) for code examples
+
+---
+
+**Ready to get started?** → [QUICKSTART.md](docs/QUICKSTART.md)

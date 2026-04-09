@@ -1,11 +1,19 @@
 """
-Example usage of the CrewAI content creation system
+Example usage of the content creation system
 Shows how to use the crew programmatically
+
+Run from root: python examples/example_usage.py [1|2|3|4]
 """
+
+import sys
+import os
+
+# Add parent directory to path so we can import from root
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from dotenv import load_dotenv
 from config import get_model_config, get_model_info, validate_model_config
-from agents import create_content_crew
+from agents_simple import create_content_crew
 
 # Load environment variables
 load_dotenv()
@@ -24,11 +32,13 @@ def example_1_simple_topic():
     print(f"\n📝 Topic: {topic}")
     print(f"🤖 Model: {get_model_info()}")
 
-    crew = create_content_crew(topic)
-    result = crew.kickoff()
+    crew = create_content_crew()
+    result = crew.execute(topic)
 
-    print("\n✅ Result:")
-    print(result)
+    print("\n✅ Result Summary:")
+    print(f"  Plan:     {len(result['plan'])} characters")
+    print(f"  Content:  {len(result['content'])} characters")
+    print(f"  Feedback: {len(result['feedback'])} characters")
 
 
 def example_2_technical_topic():
@@ -41,11 +51,13 @@ def example_2_technical_topic():
     print(f"\n📝 Topic: {topic}")
     print(f"🤖 Model: {get_model_info()}")
 
-    crew = create_content_crew(topic)
-    result = crew.kickoff()
+    crew = create_content_crew()
+    result = crew.execute(topic)
 
-    print("\n✅ Result:")
-    print(result)
+    print("\n✅ Result Summary:")
+    print(f"  Plan:     {len(result['plan'])} characters")
+    print(f"  Content:  {len(result['content'])} characters")
+    print(f"  Feedback: {len(result['feedback'])} characters")
 
 
 def example_3_business_topic():
@@ -58,11 +70,13 @@ def example_3_business_topic():
     print(f"\n📝 Topic: {topic}")
     print(f"🤖 Model: {get_model_info()}")
 
-    crew = create_content_crew(topic)
-    result = crew.kickoff()
+    crew = create_content_crew()
+    result = crew.execute(topic)
 
-    print("\n✅ Result:")
-    print(result)
+    print("\n✅ Result Summary:")
+    print(f"  Plan:     {len(result['plan'])} characters")
+    print(f"  Content:  {len(result['content'])} characters")
+    print(f"  Feedback: {len(result['feedback'])} characters")
 
 
 def example_4_with_custom_config():
@@ -94,9 +108,7 @@ def example_4_with_custom_config():
 
 
 if __name__ == "__main__":
-    import sys
-
-    print(f"\n🚀 CrewAI Content Creation Examples\n")
+    print(f"\n🚀 Content Creation Examples\n")
     print(f"Current Model: {get_model_info()}")
 
     if len(sys.argv) > 1:
