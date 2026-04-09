@@ -1,9 +1,10 @@
-# CrewAI Agents - Multi-Agent Content Creation System
+# CrewAI Agents - Multi-Agent Systems
 
-A simple, production-ready multi-agent system for content creation with **Planner**, **Writer**, and **Editor** agents.
+Production-ready multi-agent systems for **content creation** and **customer support** with specialized agents and tools.
 
 ## 🎯 Quick Start
 
+### Content Creation System
 ```bash
 # 1. Install dependencies
 pip install -r requirements.txt
@@ -14,15 +15,30 @@ ollama serve
 # 3. In another terminal, pull a model
 ollama pull llama3.2
 
-# 4. Run the system
+# 4. Run content creation
 python main.py "your topic here"
 ```
 
-## 🤖 Agents
+### Customer Support System
+```bash
+# Run support system
+python support_main.py "How do I reset my password?"
 
+# Or with documentation reference
+python support_main.py "Your question" "https://documentation.url"
+```
+
+## 🤖 Available Agent Systems
+
+### Content Creation Agents
 - **📋 Planner** - Creates detailed outlines and structure
 - **✍️ Writer** - Writes engaging, comprehensive content
 - **🔍 Editor** - Reviews for quality and brand alignment
+
+### Customer Support Agents
+- **👤 Support Agent** - Senior representative, friendly, never delegates
+- **✅ QA Agent** - Validates responses, fact-checks, tracks quality with memory
+- **🔧 Tools**: Web scraping, website search, documentation reference
 
 ## 🛠️ Configuration
 
@@ -47,43 +63,51 @@ cp .env.example .env
 
 ```
 .
-├── main.py                 # Entry point - run this!
-├── agents_simple.py        # Planner, Writer, Editor agents
-├── config.py              # Configuration system
-├── llm_factory.py         # LLM factory
-├── requirements.txt       # Dependencies
-├── .env.example           # Configuration template
+├── main.py                     # Content creation entry point
+├── support_main.py             # Customer support entry point
+├── agents_simple.py            # Content creation agents
+├── agents_support.py           # Support agents + tools
+├── config.py                   # Configuration system
+├── llm_factory.py              # LLM factory
+├── requirements.txt            # Dependencies
+├── .env.example                # Configuration template
 │
-├── docs/                  # Documentation
-│   ├── README.md         # This file
-│   ├── SETUP.md          # Detailed setup guide
-│   ├── QUICKSTART.md     # 5-minute quickstart
-│   ├── START_HERE.md     # Getting started guide
-│   ├── SUMMARY.md        # System overview
-│   └── INTEGRATION.md    # Integration examples
+├── docs/                       # Documentation
+│   ├── README.md              # This file
+│   ├── QUICKSTART.md          # 5-minute quickstart
+│   ├── SETUP.md               # Detailed setup guide
+│   ├── START_HERE.md          # Getting started guide
+│   ├── SUMMARY.md             # System overview
+│   ├── INTEGRATION.md         # Content integration examples
+│   ├── SUPPORT_SYSTEM.md      # Support system guide
+│   └── SUPPORT_INTEGRATION.md # Support integration examples
 │
-├── examples/             # Example usage
-│   └── example_usage.py  # Usage patterns
+├── examples/                   # Example usage
+│   └── example_usage.py       # Content creation examples
 │
-├── alt-implementations/  # Alternative implementations
-│   ├── agents.py        # Original CrewAI version (needs Python 3.10+)
-│   └── agents_langchain.py  # LangChain version
+├── alt-implementations/        # Alternative implementations
+│   ├── agents.py             # Original CrewAI version (Python 3.10+)
+│   └── agents_langchain.py   # LangChain version
 │
-└── utils/               # Utility code
+└── utils/                      # Utility code
     └── __init__.py
 ```
 
 ## 📚 Documentation
 
-Start with one of these:
-
+### Content Creation System
 - **[QUICKSTART.md](docs/QUICKSTART.md)** - Get running in 5 minutes ⚡
 - **[START_HERE.md](docs/START_HERE.md)** - Overview and next steps
 - **[SETUP.md](docs/SETUP.md)** - Detailed setup instructions
 - **[INTEGRATION.md](docs/INTEGRATION.md)** - Integration examples
 
+### Customer Support System
+- **[SUPPORT_SYSTEM.md](docs/SUPPORT_SYSTEM.md)** - Support system guide
+- **[SUPPORT_INTEGRATION.md](docs/SUPPORT_INTEGRATION.md)** - 20+ integration examples
+
 ## 🚀 Usage Examples
 
+### Content Creation
 ```bash
 # Basic
 python main.py "machine learning basics"
@@ -98,6 +122,22 @@ python main.py "your topic"
 # Switch models
 export MODEL_TYPE=claude
 python main.py "your topic"
+```
+
+### Customer Support
+```bash
+# Basic support question
+python support_main.py "How do I reset my password?"
+
+# With documentation reference
+python support_main.py "How do I enable 2FA?" "https://learn.microsoft.com/en-us/defender"
+
+# Interactive mode
+python support_main.py
+
+# Verbose output
+export VERBOSE_LEVEL=2
+python support_main.py "Your question"
 ```
 
 ## 📦 Available Models
@@ -151,8 +191,7 @@ export MODEL_NAME=tinyllama:latest
 
 ## 🤝 Integration
 
-Use in your Python code:
-
+### Content Creation in Python
 ```python
 from agents_simple import create_content_crew
 
@@ -164,15 +203,29 @@ print(result["content"])   # The written content
 print(result["feedback"])  # Editorial feedback
 ```
 
-See [INTEGRATION.md](docs/INTEGRATION.md) for 10+ examples.
+### Customer Support in Python
+```python
+from agents_support import create_support_crew
+
+crew = create_support_crew()
+result = crew.execute("How do I reset my password?")
+
+print(result["support_response"])  # Support agent response
+print(result["qa_validation"])     # QA validation report
+print(result["support_memory"])    # Interaction memory
+```
+
+See [INTEGRATION.md](docs/INTEGRATION.md) and [SUPPORT_INTEGRATION.md](docs/SUPPORT_INTEGRATION.md) for 30+ examples.
 
 ## 📊 Status
 
 ✅ **Production Ready**
-- Tested with Ollama (llama3.2:latest)
+- **Content Creation System**: Tested with Ollama (llama3.2:latest)
+- **Customer Support System**: Tested with web scraping and fact-checking
 - Python 3.9+ compatible
 - Simple, maintainable code
-- Comprehensive documentation
+- Comprehensive documentation (40+ examples)
+- Memory tracking and conversation history
 
 ## 📝 License
 
@@ -180,9 +233,15 @@ MIT
 
 ## 🙋 Support
 
+### Content Creation
 - Check [docs/](docs/) for comprehensive guides
+- See [INTEGRATION.md](docs/INTEGRATION.md) for 10+ code examples
 - Run `python main.py -h` for help
-- See [docs/INTEGRATION.md](docs/INTEGRATION.md) for code examples
+
+### Customer Support
+- See [SUPPORT_SYSTEM.md](docs/SUPPORT_SYSTEM.md) for complete guide
+- See [SUPPORT_INTEGRATION.md](docs/SUPPORT_INTEGRATION.md) for 20+ examples
+- Run `python support_main.py -h` for help
 
 ---
 
