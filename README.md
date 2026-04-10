@@ -28,6 +28,15 @@ python support_main.py "How do I reset my password?"
 python support_main.py "Your question" "https://documentation.url"
 ```
 
+### Event Management System
+```bash
+# Run event planning system
+python event_main.py "AI Summit" "San Francisco" 200 "2026-07-20"
+
+# Or interactive mode
+python event_main.py
+```
+
 ## 🤖 Available Agent Systems
 
 ### Content Creation Agents
@@ -39,6 +48,12 @@ python support_main.py "Your question" "https://documentation.url"
 - **👤 Support Agent** - Senior representative, friendly, never delegates
 - **✅ QA Agent** - Validates responses, fact-checks, tracks quality with memory
 - **🔧 Tools**: Web scraping, website search, documentation reference
+
+### Event Management Agents
+- **🏢 Venue Coordinator** - Identifies and books appropriate venues
+- **📦 Logistics Manager** - Plans catering, equipment, and event logistics
+- **📢 Marketing Agent** - Creates marketing strategies and participant communications
+- **🔧 Tools**: Web search (Serper), website scraping, parallel task coordination
 
 ## 🛠️ Configuration
 
@@ -65,8 +80,10 @@ cp .env.example .env
 .
 ├── main.py                     # Content creation entry point
 ├── support_main.py             # Customer support entry point
+├── event_main.py               # Event management entry point
 ├── agents_simple.py            # Content creation agents
 ├── agents_support.py           # Support agents + tools
+├── agents_events.py            # Event management agents + tools
 ├── config.py                   # Configuration system
 ├── llm_factory.py              # LLM factory
 ├── requirements.txt            # Dependencies
@@ -80,7 +97,9 @@ cp .env.example .env
 │   ├── SUMMARY.md             # System overview
 │   ├── INTEGRATION.md         # Content integration examples
 │   ├── SUPPORT_SYSTEM.md      # Support system guide
-│   └── SUPPORT_INTEGRATION.md # Support integration examples
+│   ├── SUPPORT_INTEGRATION.md # Support integration examples
+│   ├── EVENT_SYSTEM.md        # Event management guide
+│   └── EVENT_INTEGRATION.md   # Event integration examples
 │
 ├── examples/                   # Example usage
 │   └── example_usage.py       # Content creation examples
@@ -104,6 +123,10 @@ cp .env.example .env
 ### Customer Support System
 - **[SUPPORT_SYSTEM.md](docs/SUPPORT_SYSTEM.md)** - Support system guide
 - **[SUPPORT_INTEGRATION.md](docs/SUPPORT_INTEGRATION.md)** - 20+ integration examples
+
+### Event Management System
+- **[EVENT_SYSTEM.md](docs/EVENT_SYSTEM.md)** - Event management guide
+- **[EVENT_INTEGRATION.md](docs/EVENT_INTEGRATION.md)** - Integration examples
 
 ## 🚀 Usage Examples
 
@@ -138,6 +161,19 @@ python support_main.py
 # Verbose output
 export VERBOSE_LEVEL=2
 python support_main.py "Your question"
+```
+
+### Event Management
+```bash
+# Plan an event (command line)
+python event_main.py "Tech Conference" "San Francisco" 200 "2026-07-20"
+
+# Interactive mode
+python event_main.py
+
+# Verbose output
+export VERBOSE_LEVEL=2
+python event_main.py "AI Summit" "New York" 150 "2026-06-15"
 ```
 
 ## 📦 Available Models
@@ -215,7 +251,24 @@ print(result["qa_validation"])     # QA validation report
 print(result["support_memory"])    # Interaction memory
 ```
 
-See [INTEGRATION.md](docs/INTEGRATION.md) and [SUPPORT_INTEGRATION.md](docs/SUPPORT_INTEGRATION.md) for 30+ examples.
+### Event Management in Python
+```python
+from agents_events import create_event_crew
+
+crew = create_event_crew()
+result = crew.execute(
+    event_city="San Francisco",
+    event_topic="AI Summit",
+    expected_participants=200,
+    tentative_date="2026-07-20"
+)
+
+print(result["venue"])      # Venue details
+print(result["logistics"])  # Logistics plan
+print(result["marketing"])  # Marketing strategy
+```
+
+See [INTEGRATION.md](docs/INTEGRATION.md), [SUPPORT_INTEGRATION.md](docs/SUPPORT_INTEGRATION.md), and [EVENT_INTEGRATION.md](docs/EVENT_INTEGRATION.md) for 40+ examples.
 
 ## 📊 Status
 
@@ -242,6 +295,11 @@ MIT
 - See [SUPPORT_SYSTEM.md](docs/SUPPORT_SYSTEM.md) for complete guide
 - See [SUPPORT_INTEGRATION.md](docs/SUPPORT_INTEGRATION.md) for 20+ examples
 - Run `python support_main.py -h` for help
+
+### Event Management
+- See [EVENT_SYSTEM.md](docs/EVENT_SYSTEM.md) for complete guide
+- See [EVENT_INTEGRATION.md](docs/EVENT_INTEGRATION.md) for integration examples
+- Run `python event_main.py -h` for help
 
 ---
 
